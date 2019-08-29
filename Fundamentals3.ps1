@@ -62,3 +62,46 @@ function Get-MyService {
 
 Get-MyService
 Get-MyService -Services 'Bits'
+
+# Restrict what the user can get information for
+
+function Get-MyService {
+    Param(
+        [Parameter(Mandatory = $false)]
+        [ValidateSet('Spooler', 'BITS', IgnoreCase = $true)]
+        [string[]]$Services = 'Spooler'
+    )
+
+    Get-Service $Services
+}
+
+# Named verses Positional parameters
+
+function Get-MyService {
+    Param(
+        [Parameter(Mandatory = $false, Position = 0)]
+        [ValidateSet('Spooler', 'BITS', IgnoreCase = $true)]
+        [string[]]$Services = 'Spooler',
+
+        [Parameter(Mandatory = $true, Position = 1)]
+        [string]$Words
+    )
+
+    Get-Service $Services
+    Write-Output $Words
+}
+
+Get-MyService -Services Spooler -Words 'Hello world'
+Get-MyService Spooler 'Hello world'
+
+# Scope
+# Function scope
+
+Get-MyService Spooler 'Hello world'
+$Words
+
+# Global scope
+
+$Words = "This is in the global scope."
+Get-MyService Spooler 'Hello world'
+$Words
