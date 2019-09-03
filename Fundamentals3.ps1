@@ -7,7 +7,8 @@ Get-Service $Services
 
 # We can put this script into a file and run it
 
-Set-Location 'C:\Users\cdlit\OneDrive\Documents\PowerShell Talks\Fundamentals\Fundamentals3\'
+$Location = 'C:\Users\cdlit\git\Fundamentals3'
+Set-Location $Location
 
 # Validate the contents of my script
 
